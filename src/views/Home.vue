@@ -5,6 +5,7 @@
         <h1>Simulador Covid-19</h1>
       </b-col>
     </b-row>
+    <b-button on:click="fillData"></b-button>
     <b-row>
       <b-col cols="7">
         <Charts :chart-data="datacollection"/>
@@ -93,8 +94,38 @@ export default {
       console.log("Recuperados:",this.counts[2]);
       console.log("Muertos:",this.counts[3]);
       console.log("---------------------------");
+    },
+    fillData () {
+        this.datacollection = {
+          labels: ["principio", "medio","fin"],
+          datasets: [
+            {
+              label: 'Enfermos',
+              backgroundColor: 'rgba(0,0,255,.3)',
+              data: [30, 50, 100]
+            },
+            {
+              label: 'Recuperados',
+              backgroundColor: 'rgba(0,210,210,.3)',
+              data: [20, 30, 40]
+            },
+            {
+              label: 'Fallecidos',
+              backgroundColor: 'rgba(50,50,100,.3)',
+              data: [10, 15, 20]
+            },
+            {
+              label: 'Sanos',
+              backgroundColor: 'rgba(200,20,25,.3)',
+              data: [1000, 900,800]
+            },
+          ]
+        }
     }
-  }
+  },
+  mounted () {
+    this.fillData()
+  },
 }
 </script>
 
