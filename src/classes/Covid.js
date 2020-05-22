@@ -68,12 +68,14 @@ export class Simulator {
     }
 
     nextDay(){
+        let newSick = 0;
         for(let i = 0; i < this.num_students; i++){
             let state = this.students[i].nextState();
             //index 0 is prevState -- index 1 is currentState
             if (state[0] == 0 && state[1] == 1){
                 this.countHealty--;
                 this.countSick++;
+                newSick++;
             }
             else if (state[0] == 1 && state[1] == 3){
                 this.countSick--;
@@ -90,8 +92,7 @@ export class Simulator {
         for(let i = 0; i< this.cities.length;i++){
             this.cities[i].multiplyTransitionMatrix();
         }
-
-        return [this.countHealty, this.countSick, this.countRecover, this.countDeath]
+        return [this.countHealty, this.countSick, this.countRecover, this.countDeath, newSick]
     }
     getRandomStudent(){
         let random = Math.floor(Math.random() * this.num_students)

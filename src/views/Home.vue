@@ -10,6 +10,9 @@
         <div class="chart-width">
           <Charts :chart-data="datacollection"/>
         </div>
+        <div class="chart-width">
+          <ChartsNew :chart-data="casecollection"/>
+        </div>
       </b-col>
       <b-col cols="6">
         <b-form @submit="simulateOneDay">
@@ -121,23 +124,28 @@
 // @ is an alias to /src
 import {Simulator} from '@/classes/Covid.js';
 import Charts from '@/views/Charts.vue';
+import ChartsNew from '@/views/ChartsNew.vue';
+
 
 export default {
   name: 'Home', 
   components: {
     Charts,
+    ChartsNew,
   },  
   data(){
     return {
       num_days: 60,
       counts: [],
       datacollection: null,
+      casecollection: null,
       numSanosArr: [],
       numEnfermosArr: [],
       numRecuperadosArr: [],
       numMuertosArr: [],
       currentDay: 0,
       labelDays: [],
+      newCases: [],
       percentageGdl: .4,
       percentageZpn: .2,
       percentageTla: .1,
@@ -182,6 +190,7 @@ export default {
       this.numMuertosArr = this.numMuertosArr.concat(this.counts[3]);
       this.currentDay++;
       this.labelDays = this.labelDays.concat(this.currentDay);
+      this.newCases = this.newCases.concat(this.counts[4]);
     },
     fillData () {
         this.simulateOneDay()
@@ -207,6 +216,16 @@ export default {
               label: 'Sanos',
               backgroundColor: 'rgba(159,192,233,.4)',
               data: this.numSanosArr
+            },
+          ]
+        }
+        this.casecollection = {
+          labels: this.labelDays,
+          datasets: [
+            {
+              label: 'Nuevos Casos',
+              backgroundColor: 'rgba(52,193,10,0.4)',
+              data: this.newCases
             },
           ]
         }
