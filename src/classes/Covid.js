@@ -8,7 +8,9 @@ export class Simulator {
         this.countSick = 0;
         this.countRecover = 0;
         this.countDeath = 0;
+        this.trackStudent = undefined;
         this.init(perGDL, perTLQ, perZAP, perTON, perTLJ, perSAL);
+        this.track();
 
     }
 
@@ -33,26 +35,32 @@ export class Simulator {
         for (let i = 0; i < this.num_students; i++) {
             if (num_fromGDL > 0) {
                 this.students.push(new Student(this.cities[0]));
+                num_fromGDL--;
                 continue;
             }
             if (num_fromTLQ > 0) {
                 this.students.push(new Student(this.cities[1]));
+                num_fromTLQ--;
                 continue;
             }
             if (num_fromZAP > 0) {
                 this.students.push(new Student(this.cities[2]));
+                num_fromZAP--;
                 continue;
             }
             if (num_fromTON > 0) {
                 this.students.push(new Student(this.cities[3]));
+                num_fromTON--;
                 continue;
             }
             if (num_fromTLJ > 0) {
                 this.students.push(new Student(this.cities[4]));
+                num_fromTLJ--;
                 continue;
             }
             if (num_fromSAL > 0) {
                 this.students.push(new Student(this.cities[5]));
+                num_fromSAL--;
                 continue;
             }
         }
@@ -85,6 +93,18 @@ export class Simulator {
 
         return [this.countHealty, this.countSick, this.countRecover, this.countDeath]
     }
+    getRandomStudent(){
+        let random = Math.floor(Math.random() * this.num_students)
+        console.log(random)
+        return this.students[random];
+    }
+    track(){
+        if (this.trackStudent == undefined){
+            this.trackStudent = this.getRandomStudent()
+        }
+        return this.trackStudent.healt_state;
+    }
+
 }
 
 

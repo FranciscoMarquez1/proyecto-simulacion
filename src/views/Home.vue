@@ -97,6 +97,21 @@
           </b-col>
         </b-row>
       </b-form>
+        <b-form>
+          <b-row class="input-row">
+            <b-col cols="6">
+              <label>Seguimiento de alumno aleatorio</label>
+            </b-col>
+            <b-col cols="6">
+              <label v-if="this.trackStudent === null">Comienza una Simulaccion</label>
+              <div v-else>
+                <label >Ciudad de procedencia: {{this.trackStudent.city.name}}</label>
+                <br>
+                <b-icon icon="circle-fill" class="state-circle" v-bind:style="{color: this.stateColor()}"></b-icon>
+              </div>
+            </b-col>
+          </b-row>
+        </b-form>
       </b-col>
     </b-row>
   </div>
@@ -106,7 +121,6 @@
 // @ is an alias to /src
 import {Simulator} from '@/classes/Covid.js';
 import Charts from '@/views/Charts.vue';
-
 
 export default {
   name: 'Home', 
@@ -133,6 +147,7 @@ export default {
       numEstudiantes: 10000,
       partialSimDays: 10,  
       simulator : null,
+      trackStudent: null,
       showDismissibleAlert: false,
     }
   },
@@ -147,7 +162,8 @@ export default {
         this.numMuertosArr = [],
         this.currentDay = 0,
         this.labelDays = [],
-        this.simulator = new Simulator(this.numEstudiantes, this.percentageGdl, this.percentageZpn, this.percentageTla, this.percentageTon, this.percentageTlj, this.percentageEls);
+        this.simulator = new Simulator(this.numEstudiantes, this.percentageGdl, this.percentageTla, this.percentageZpn, this.percentageTon, this.percentageTlj, this.percentageEls);
+        this.trackStudent = this.simulator.trackStudent;
         for(let i = 0; i < this.num_days; i++){
           this.fillData();
         }
@@ -179,12 +195,12 @@ export default {
             },
             {
               label: 'Recuperados',
-              backgroundColor: 'rgba(46,64,130,.4)',
+              backgroundColor: 'rgba(46,64,130,0.4)',
               data: this.numRecuperadosArr
             },
             {
               label: 'Enfermos',
-              backgroundColor: 'rgba(52,193,10,.4)',
+              backgroundColor: 'rgba(52,193,10,0.4)',
               data: this.numEnfermosArr
             },
             {
@@ -194,6 +210,20 @@ export default {
             },
           ]
         }
+    },
+    stateColor(){
+      if (this.trackStudent.healt_state == 0){
+        return "#9FC0E9";
+      }
+      if (this.trackStudent.healt_state == 1){
+        return "#64C10A";
+      }
+      if (this.trackStudent.healt_state == 2){
+        return "#2E4082";
+      }
+      else{
+        return "#000000";
+      }
     }
   },
   mounted () {
@@ -243,5 +273,8 @@ export default {
 }
 .alert {
   margin: auto;
+}
+.state-circle{
+  color: #9FC0E9;
 }
 </style>
