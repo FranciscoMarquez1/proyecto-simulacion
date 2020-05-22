@@ -5,7 +5,6 @@
         <h1>Simulador Covid-19</h1>
       </b-col>
     </b-row>
-    <b-button v-on:click="fillData">HOLA</b-button>
     <b-row>
       <b-col cols="6">
         <div class="chart-width">
@@ -67,10 +66,30 @@
               placeholder="El Salto"
               v-model="percentageEls"
               ></b-input>
+              <label>Días de Simulación:</label>
+              <b-input
+              id="input-salto"
+              required
+              placeholder="El Salto"
+              v-model="num_days"
+              ></b-input>
             </b-col>
             <b-button variant="primary" v-on:click="startSimulation">Comenzar Simulación</b-button>
           </b-row>
         </b-form>
+      <b-form>
+      <b-row class="input-row">
+          <b-col cols="6">
+            <label>Dias Simulación Parcial:</label>
+            <b-input
+            v-model="partialSimDays"
+            ></b-input>
+          </b-col>
+          <b-col cols="6">
+            <b-button variant="primary" v-on:click="partialSimulation">Simular Días</b-button>
+          </b-col>
+        </b-row>
+      </b-form>
       </b-col>
     </b-row>
   </div>
@@ -104,18 +123,27 @@ export default {
       percentageTon: .1,
       percentageTlj: .1,
       percentageEls: .1,
-      numEstudiantes: 10000,    
+      numEstudiantes: 10000,
+      partialSimDays: 10,  
       simulator : null,
     }
   },
   methods: {
     startSimulation(){
+      this.numSanosArr = [],
+      this.numEnfermosArr = [],
+      this.numRecuperadosArr = [],
+      this.numMuertosArr = [],
+      this.currentDay = 0,
+      this.labelDays = [],
       this.simulator = new Simulator(this.numEstudiantes, this.percentageGdl, this.percentageZpn, this.percentageTla, this.percentageTon, this.percentageTlj, this.percentageEls);
       for(let i = 0; i < this.num_days; i++){
-        // setTimeout(() => { this.fillData() ;}, 3000);
-       //const sleep = (3000) => { return new Promise(resolve => setTimeout(this.fillData(), 3000)) } 
         this.fillData();
-        // window.setInterval(() => { this.fillData()}, 3000)
+      }
+    },
+    partialSimulation(){
+      for(let i = 0; i < this.partialSimDays; i++){
+        this.fillData();
       }
     },
     simulateOneDay(){
@@ -133,23 +161,23 @@ export default {
           labels: this.labelDays,
           datasets: [
             {
-              label: 'Enfermos',
-              backgroundColor: 'rgba(0,0,255,.3)',
-              data: this.numEnfermosArr
-            },
-            {
-              label: 'Recuperados',
-              backgroundColor: 'rgba(0,210,210,.3)',
-              data: this.numRecuperadosArr
-            },
-            {
               label: 'Fallecidos',
-              backgroundColor: 'rgba(50,50,100,.3)',
+              backgroundColor: 'rgba(0,0,0,.4)',
               data: this.numMuertosArr
             },
             {
+              label: 'Recuperados',
+              backgroundColor: 'rgba(46,64,130,.4)',
+              data: this.numRecuperadosArr
+            },
+            {
+              label: 'Enfermos',
+              backgroundColor: 'rgba(52,193,10,.4)',
+              data: this.numEnfermosArr
+            },
+            {
               label: 'Sanos',
-              backgroundColor: 'rgba(200,20,25,.3)',
+              backgroundColor: 'rgba(159,192,233,.4)',
               data: this.numSanosArr
             },
           ]
@@ -164,7 +192,7 @@ export default {
 
 <style>
 .header {
-  background-color: #5160A9;
+  background-color: #C25B47;
 }
 .row {
   margin: 0px !important;
@@ -175,7 +203,7 @@ export default {
 .input-row {
   margin: 40px !important;
   padding: 20px;
-  background-color: #A988EE;
+  background-color: #F3CA3F;
   border-radius: 1rem;
 }
 .input-row .btn {
@@ -193,5 +221,7 @@ export default {
 }
 .chart-width {
   max-width: 80%;
+  margin: auto;
+  margin-top: 20px;
 }
 </style>

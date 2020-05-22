@@ -9,7 +9,7 @@ export default {
   props: ['options'],
   mounted () {
     this.renderChart(this.data, this.options)
-  }
+  },
 }
 </script>
 
