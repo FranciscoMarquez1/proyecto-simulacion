@@ -14,6 +14,15 @@
       <b-col cols="6">
         <b-form @submit="simulateOneDay">
           <b-row class="input-row">
+            <b-alert
+              variant="danger"
+              dismissible
+              fade
+              :show="showDismissibleAlert"
+              @dismissed="showDismissibleAlert=false"
+            >
+              La suma de porcentajes debe dar 1
+            </b-alert>
             <b-col cols="6">
               <label>Porcentaje de Guadalajara:</label>
               <b-input
@@ -68,9 +77,7 @@
               ></b-input>
               <label>Días de Simulación:</label>
               <b-input
-              id="input-salto"
               required
-              placeholder="El Salto"
               v-model="num_days"
               ></b-input>
             </b-col>
@@ -126,19 +133,24 @@ export default {
       numEstudiantes: 10000,
       partialSimDays: 10,  
       simulator : null,
+      showDismissibleAlert: false,
     }
   },
   methods: {
     startSimulation(){
-      this.numSanosArr = [],
-      this.numEnfermosArr = [],
-      this.numRecuperadosArr = [],
-      this.numMuertosArr = [],
-      this.currentDay = 0,
-      this.labelDays = [],
-      this.simulator = new Simulator(this.numEstudiantes, this.percentageGdl, this.percentageZpn, this.percentageTla, this.percentageTon, this.percentageTlj, this.percentageEls);
-      for(let i = 0; i < this.num_days; i++){
-        this.fillData();
+      if(!this.sumPercentages){
+        this.showDismissibleAlert=true;
+      }else{
+        this.numSanosArr = [],
+        this.numEnfermosArr = [],
+        this.numRecuperadosArr = [],
+        this.numMuertosArr = [],
+        this.currentDay = 0,
+        this.labelDays = [],
+        this.simulator = new Simulator(this.numEstudiantes, this.percentageGdl, this.percentageZpn, this.percentageTla, this.percentageTon, this.percentageTlj, this.percentageEls);
+        for(let i = 0; i < this.num_days; i++){
+          this.fillData();
+        }
       }
     },
     partialSimulation(){
@@ -187,6 +199,11 @@ export default {
   mounted () {
     this.fillData()
   },
+  computed: {
+    sumPercentages: function () {
+      return ((Number(this.percentageGdl) + Number(this.percentageZpn) + Number(this.percentageTla) + Number(this.percentageTon) + Number(this.percentageTlj) + Number(this.percentageEls)) == 1)
+    }
+  }
 }
 </script>
 
@@ -202,7 +219,7 @@ export default {
 }
 .input-row {
   margin: 40px !important;
-  padding: 20px;
+  padding: 10px;
   background-color: #F3CA3F;
   border-radius: 1rem;
 }
@@ -223,5 +240,8 @@ export default {
   max-width: 80%;
   margin: auto;
   margin-top: 20px;
+}
+.alert {
+  margin: auto;
 }
 </style>
