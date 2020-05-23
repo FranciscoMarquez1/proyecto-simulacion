@@ -135,7 +135,7 @@ export default {
   },  
   data(){
     return {
-      num_days: 60,
+      num_days: 1,
       counts: [],
       datacollection: null,
       casecollection: null,
@@ -170,6 +170,7 @@ export default {
         this.numMuertosArr = [],
         this.currentDay = 0,
         this.labelDays = [],
+        this.newCases = [],
         this.simulator = new Simulator(this.numEstudiantes, this.percentageGdl, this.percentageTla, this.percentageZpn, this.percentageTon, this.percentageTlj, this.percentageEls);
         this.trackStudent = this.simulator.trackStudent;
         for(let i = 0; i < this.num_days; i++){

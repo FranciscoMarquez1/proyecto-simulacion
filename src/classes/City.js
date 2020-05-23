@@ -24,7 +24,7 @@ export class City {
         if (this.current_day < 34){
             this.number_of_cases = Math.floor(this.number_of_cases * 1.045);
         } else {
-            this.number_of_cases = Math.floor(this.number_of_cases * 0.955);
+            this.number_of_cases = Math.floor(this.number_of_cases * 0.953);
         }
         this.tansition_matrix[0][1] = this.number_of_cases/this.population;
         this.tansition_matrix[0][0] = 1 - this.tansition_matrix[0][1];

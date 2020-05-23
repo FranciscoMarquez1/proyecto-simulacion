@@ -16,12 +16,12 @@ export class Simulator {
 
     init(perGDL, perTLQ, perZAP, perTON, perTLJ, perSAL) {
         this.cities = [];
-        this.cities.push(new City('Guadalajara', 1460189, 310));
-        this.cities.push(new City('Tlaquepaque', 642114, 54));
-        this.cities.push(new City('Zapopan', 1351854, 122));
-        this.cities.push(new City('Tonala', 587982, 72));
-        this.cities.push(new City('Tlajomulca', 603689, 35));
-        this.cities.push(new City('El Salto', 603689, 35));
+        this.cities.push(new City('Guadalajara', 1460189, 65));
+        this.cities.push(new City('Tlaquepaque', 642114, 11));
+        this.cities.push(new City('Zapopan', 1351854, 26));
+        this.cities.push(new City('Tonala', 587982, 15));
+        this.cities.push(new City('Tlajomulca', 603689, 7));
+        this.cities.push(new City('El Salto', 603689, 7));
 
         let num_fromGDL = Math.floor(perGDL * this.num_students);
         let num_fromTLQ = Math.floor(perTLQ * this.num_students);
