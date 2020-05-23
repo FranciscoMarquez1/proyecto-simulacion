@@ -251,7 +251,7 @@ export default {
   },
   computed: {
     sumPercentages: function () {
-      return ((Number(this.percentageGdl) + Number(this.percentageZpn) + Number(this.percentageTla) + Number(this.percentageTon) + Number(this.percentageTlj) + Number(this.percentageEls)) == 1)
+      return ((parseFloat(this.percentageGdl) + parseFloat(this.percentageZpn) + parseFloat(this.percentageTla) + parseFloat(this.percentageTon) + parseFloat(this.percentageTlj) + parseFloat(this.percentageEls)).toFixed(2) == 1)
     }
   }
 }
