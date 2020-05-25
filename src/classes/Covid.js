@@ -20,8 +20,8 @@ export class Simulator {
         this.cities.push(new City('Tlaquepaque', 642114, 11));
         this.cities.push(new City('Zapopan', 1351854, 26));
         this.cities.push(new City('Tonala', 587982, 15));
-        this.cities.push(new City('Tlajomulca', 603689, 7));
-        this.cities.push(new City('El Salto', 603689, 7));
+        this.cities.push(new City('Tlajomulco', 603689, 7));
+        this.cities.push(new City('El Salto', 187817, 7));
 
         let num_fromGDL = Math.floor(perGDL * this.num_students);
         let num_fromTLQ = Math.floor(perTLQ * this.num_students);
